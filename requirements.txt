@@ -1,0 +1,7 @@
+# Derived from the imports in the notebook and scripts.
+# Original environment: Spark 2.4 on Cloudera CDH 6.2; the code uses standard
+# APIs and should run on newer Spark versions.
+findspark
+pyspark
+pandas
+matplotlib

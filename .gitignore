@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Spark artifacts
+metastore_db/
+spark-warehouse/
+derby.log
+checkpoint/
+*.crc
+
+# Data (not tracked)
+*.csv
+*.tar.gz
+
+# OS
+.DS_Store
+Thumbs.db
