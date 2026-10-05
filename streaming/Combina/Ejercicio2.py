@@ -7,35 +7,35 @@ spark = SparkSession.builder.appName("SparkStreaming").getOrCreate()
 
 spark.conf.set("spark.sql.shuffle.partitions", "1")
 
-# Stream de impresiones
+# Impressions stream
 impresiones = (
   spark
     .readStream.format("rate").option("rowsPerSecond", "1").option("numPartitions", "1").load()
     .selectExpr("value AS idAnuncio", "timestamp AS tiempoImpresion")
 )
 
-# Stream de clicks
+# Clicks stream
 clicks = (
   spark
     .readStream.format("rate").option("rowsPerSecond", "1").option("numPartitions", "1").load()
     .selectExpr("value AS idAnuncio", "timestamp AS tiempoClick")
-    .where(rand() < 0.2)  # Nos quedamos con el 20% de las filas
+    .where(rand() < 0.2)  # We keep 20% of the rows
 )
 
-# Combinar los streams
+# Combine the streams
 combined = impresiones.join(
   clicks,
   on="idAnuncio",
   how="inner"
 ).withWatermark("tiempoImpresion", "15 seconds").withWatermark("tiempoClick", "15 seconds")
 
-# Añadir columna con la diferencia de tiempo
+# Add a column with the time difference
 combined = combined.withColumn(
     "deltaT", 
     (unix_timestamp(col("tiempoClick")) - unix_timestamp(col("tiempoImpresion")))
 )
 
-# Mostrar el stream combinado
+# Show the combined stream
 resCombined = (
   combined
     .writeStream

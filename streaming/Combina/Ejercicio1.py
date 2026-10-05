@@ -7,22 +7,22 @@ spark = SparkSession.builder.appName("SparkStreaming").getOrCreate()
 
 spark.conf.set("spark.sql.shuffle.partitions", "1")
 
-# Stream de impresiones
+# Impressions stream
 impresiones = (
   spark
     .readStream.format("rate").option("rowsPerSecond", "1").option("numPartitions", "1").load()
     .selectExpr("value AS idAnuncio", "timestamp AS tiempoImpresion")
 )
 
-# Stream de clicks
+# Clicks stream
 clicks = (
   spark
     .readStream.format("rate").option("rowsPerSecond", "1").option("numPartitions", "1").load()
     .selectExpr("value AS idAnuncio", "timestamp AS tiempoClick")
-    .where(rand() < 0.2)  # Nos quedamos con el 20% de las filas
+    .where(rand() < 0.2)  # We keep 20% of the rows
 )
 
-# Mostrar el stream de impresiones
+# Show the impressions stream
 resImpresiones = (
   impresiones
     .writeStream
@@ -32,7 +32,7 @@ resImpresiones = (
     .start()
 )
 
-# Mostrar el stream de clicks
+# Show the clicks stream
 resClicks = (
   clicks
     .writeStream

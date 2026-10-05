@@ -7,7 +7,7 @@ from pyspark.sql.types import StringType
 ejemplo='{"ac": [{"flight": "RYR80XN ","lat": 40.783493,"lon": -9.551697, "alt_baro": 37000,"category": "A3"}], "ctime": 1702444273059, "msg": "No error", "now": 1702444272731, "ptime": 6, "total": 146}'
 spark = SparkSession.builder.appName("STRUCTURED STREAMING").getOrCreate()
 
-# Inferir el esquema del JSON
+# Infer the schema of the JSON
 esquema = schema_of_json(ejemplo)
 
 flujo = spark \
@@ -19,7 +19,7 @@ flujo = spark \
 
 datos = flujo.select(from_json(col("value").cast("string"), esquema).alias("parsed_value"))
 
-# Usamos struct para agrupar las claves en un solo struct y luego convertimos ese struct en una cadena JSON
+# We use struct to group the keys into a single struct and then convert that struct into a JSON string
 datos_seleccionados = datos.select(
     explode(col("parsed_value.ac")).alias("ac"),
     to_json(struct(

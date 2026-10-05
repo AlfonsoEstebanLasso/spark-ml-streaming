@@ -16,7 +16,7 @@ Two pieces of PySpark work developed on a Cloudera CDH 6.2 cluster:
 - **`pyspark_ml_covid.ipynb`** — a machine-learning pipeline on Mexico's open COVID-19 patient dataset: filtering and cleaning, descriptive and visual analysis, logistic regression with class-imbalance handling, and a decision tree with a manual interpretation of the fitted tree.
 - **`streaming/`** — Spark Structured Streaming scripts: parsing a live JSON feed of aircraft positions from a socket, geographic filtering, distance calculations, and stream–stream joins on rate sources, each with a console screenshot of the running job.
 
-> The notebook narrative and its code comments were translated to English from the original Spanish; printed outputs and figure labels are shown as originally executed (in Spanish). Comments in the `streaming/` scripts remain in Spanish (original coursework code, kept as written).
+> The notebook narrative and all code comments (notebook and `streaming/` scripts) were translated to English from the original Spanish. Printed outputs, figure labels and text strings inside the code are shown as originally written (in Spanish).
 
 ## Objective
 
